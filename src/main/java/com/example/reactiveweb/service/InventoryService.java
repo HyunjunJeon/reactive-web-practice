@@ -5,7 +5,6 @@ import com.example.reactiveweb.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.mongodb.core.FluentMongoOperations;
 import org.springframework.data.mongodb.core.ReactiveFluentMongoOperations;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,7 +15,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @RequiredArgsConstructor
 @Service
 public class InventoryService {
-    private final ItemRepository exampleRepository;
+    private final ItemRepository itemRepository;
     private final ReactiveFluentMongoOperations reactiveFluentMongoOperations;
 
     // Example 쿼리를 사용해서 여러 조건을 조립해서 스프링 데이터에 전달하면, 필요한 쿼리문을 만들어줄 것
@@ -34,7 +33,7 @@ public class InventoryService {
 
         Example<Item> probe = Example.of(item, matcher); // Example 객체를 생성함
 
-        return exampleRepository.findAll(probe);
+        return itemRepository.findAll(probe);
     }
 
     // Reactive Fluent Data API 를 이용해 위의 검색 쿼리를 구현함
